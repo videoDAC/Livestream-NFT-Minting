@@ -95,6 +95,11 @@ Install ffmpeg (required for building) from `go-livepeer` repo. This may take so
 ```
 cd go-livepeer
 ./install_ffmpeg.sh
+```
+NOTE: if using 20.04, the install_ffmpeg.sh will fail first time, but will succeed second time.
+
+Then continue:
+```
 rm /home/ubuntu/*.gz /home/ubuntu/*.xz
 ```
 
