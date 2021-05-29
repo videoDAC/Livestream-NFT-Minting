@@ -32,47 +32,6 @@ go version
 ```
 Should print the version number.
 
-## Install `geth` on Rinkeby
-
-Download the latest `geth` binary:
-```
-wget https://gethstore.blob.core.windows.net/builds/geth-linux-amd64-1.10.3-991384a7.tar.gz
-tar -xzf geth-linux-amd64-1.10.3-991384a7.tar.gz
-rm geth-linux-amd64-1.10.3-991384a7.tar.gz
-```
-Then, set up `geth` to run as a system service:
-```
-cd /etc/systemd/system
-sudo nano rinkeby-geth.service
-```
-Paste the following into the file
-```
-[Unit]
-Description=service to start geth with default sync on Rinkeby
-After=network.target
-
-[Service]
-User=ubuntu
-Type=simple
-Restart=always
-RestartSec=1s
-WorkingDirectory=/home/ubuntu/
-ExecStart=/home/ubuntu/geth-linux-amd64-1.10.3-991384a7/geth --rinkeby --http --http.addr 0.0.0.0
-
-[Install]
-WantedBy=default.target
-```
-Save the file `Ctrl-S`, close `Ctrl-X` and continue:
-```
-sudo systemctl enable rinkeby-geth.service
-sudo systemctl start rinkeby-geth.service
-```
-Then to observe:
-```
-sudo journalctl -fu rinkeby-geth.service
-```
-Exit observation with `Ctrl-C`.
-
 ## Install `ipfs`
 
 Download the latest `ipfs` binary:
@@ -152,9 +111,4 @@ make
 If your Rinkeby node is not finished syncing, run this:
 ```
 /home/ubuntu/go-livepeer/livepeer -broadcaster -network rinkeby -ethUrl https://rinkeby.infura.io/v3/9b7ee8501114410ca67288cc277c65d8
-```
-
-If your Rinkeby node has finished syncing, run this:
-```
-/home/ubuntu/go-livepeer/livepeer -broadcaster -network rinkeby -ethUrl http://localhost:8545
 ```
