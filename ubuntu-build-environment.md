@@ -115,12 +115,12 @@ make
 
 # Next steps
 
-To add a `-mint` flag to the command:
+To add a `-mint` flag to the command, and an `-ipfsUrl` for where to add to IPFS:
 ```
-/home/ubuntu/go-livepeer/livepeer -broadcaster -mint -ipfsUrl http://127.0.0.1:5001/webui -network rinkeby -ethUrl https://rinkeby.infura.io/v3/9b7ee8501114410ca67288cc277c65d8
+/home/ubuntu/go-livepeer/livepeer -broadcaster -mint -ipfsUrl http://127.0.0.1:5001 -network rinkeby -ethUrl https://rinkeby.infura.io/v3/9b7ee8501114410ca67288cc277c65d8
 ```
 
 So that if the software is run with the `-mint` flag, then the `livepeer` process:
 
-1. Writes the video segment `.ts` files to IPFS, and retrieves the CID
+1. Writes the video segment `.ts` files to the `-ipfsUrl`, and generates the CID for the content.
 2. Mints an NFT referencing the IPFS CID.
