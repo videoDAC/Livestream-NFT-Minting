@@ -85,6 +85,7 @@ sudo journalctl -fu ipfs-daemon.service
 
 Download `videoDAC` forked repositories for `go-livepeer` and `lpms`:
 ```
+cd ~
 git clone https://github.com/videoDAC/go-livepeer.git
 git clone https://github.com/videoDAC/lpms.git
 ```
