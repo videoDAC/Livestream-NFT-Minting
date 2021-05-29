@@ -106,12 +106,15 @@ export PKG_CONFIG_PATH=~/compiled/lib/pkgconfig
 export HIGHEST_CHAIN_TAG=rinkeby
 make
 ```
+This should create a `livepeer` binary file at `/home/ubuntu/go-livepeer/livepeer`.
 
 ## Run Livepeer
 
 ```
 /home/ubuntu/go-livepeer/livepeer -broadcaster -network rinkeby -ethUrl https://rinkeby.infura.io/v3/9b7ee8501114410ca67288cc277c65d8
 ```
+
+Follow the instructions to set up a keystore file, and after it has synced with the network, it will show you `Video Ingest Endpoint rtmp://127.0.0.1:1935`.
 
 # Next steps
 
