@@ -117,7 +117,7 @@ make
 
 To add a `-mint` flag to the command:
 ```
-/home/ubuntu/go-livepeer/livepeer -broadcaster -mint -network rinkeby -ethUrl https://rinkeby.infura.io/v3/9b7ee8501114410ca67288cc277c65d8
+/home/ubuntu/go-livepeer/livepeer -broadcaster -mint -ipfsUrl http://127.0.0.1:5001/webui -network rinkeby -ethUrl https://rinkeby.infura.io/v3/9b7ee8501114410ca67288cc277c65d8
 ```
 
 So that if the software is run with the `-mint` flag, then the `livepeer` process:
