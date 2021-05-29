@@ -99,14 +99,9 @@ cd go-livepeer
 ```
 NOTE: if using 20.04, the install_ffmpeg.sh will fail first time, but will succeed second time.
 
-Then continue:
-```
-rm /home/ubuntu/*.gz /home/ubuntu/*.xz
-```
-
 ### Build livepeer
 ```
-cd /home/ubuntu/go-livepeer
+cd ~/go-livepeer
 export PKG_CONFIG_PATH=~/compiled/lib/pkgconfig
 export HIGHEST_CHAIN_TAG=rinkeby
 make
