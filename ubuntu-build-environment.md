@@ -12,6 +12,7 @@ If you would like a clean ubuntu server, ask in [videoDAC Discord](https://disco
 ```
 sudo apt update
 sudo apt upgrade -y
+
 sudo apt-get update -y && sudo apt-get -y install build-essential pkg-config autoconf gnutls-dev git curl
 ```
 ### Install `golang`
@@ -32,62 +33,14 @@ go version
 ```
 Should print the version number.
 
-## Install `ipfs`
-
-Download the latest `ipfs` binary:
-```
-cd ~
-wget https://dist.ipfs.io/go-ipfs/v0.8.0/go-ipfs_v0.8.0_linux-amd64.tar.gz
-tar -xvzf go-ipfs_v0.8.0_linux-amd64.tar.gz
-rm go-ipfs_v0.8.0_linux-amd64.tar.gz
-cd go-ipfs
-sudo bash install.sh
-ipfs --version
-```
-Initialise ipfs:
-```
-ipfs init
-```
-Then, set up `ipfs daemon` to run as a system service:
-```
-cd /etc/systemd/system
-sudo nano ipfs-daemon.service
-```
-Paste the following into the file
-```
-[Unit]
-Description=service to start ipfs daemon
-After=network.target
-
-[Service]
-User=ubuntu
-Type=simple
-Restart=always
-RestartSec=1s
-WorkingDirectory=/home/ubuntu/
-ExecStart=/usr/local/bin/ipfs daemon
-
-[Install]
-WantedBy=default.target
-```
-Save the file (Ctrl-S), close (Ctrl-X) and continue:
-```
-sudo systemctl enable /etc/systemd/system/ipfs-daemon.service
-sudo systemctl start ipfs-daemon.service
-```
-Then to observe:
-```
-sudo journalctl -fu ipfs-daemon.service
-```
 ## Build livepeer
 
 ### Clone forked repos
 
-Download `videoDAC` forked repositories for `go-livepeer` and `lpms`:
+Download repositories for `go-livepeer`:
 ```
 cd ~
-git clone https://github.com/videoDAC/go-livepeer.git
-git clone https://github.com/videoDAC/lpms.git
+git clone https://github.com/livepeer/go-livepeer.git
 ```
 
 ### Install ffmpeg for Livepeer
@@ -101,29 +54,46 @@ NOTE: if using 20.04, the install_ffmpeg.sh will fail first time, but will succe
 
 ### Build livepeer
 ```
-cd ~/go-livepeer
 export PKG_CONFIG_PATH=~/compiled/lib/pkgconfig
 export HIGHEST_CHAIN_TAG=rinkeby
 make
 ```
 This should create a `livepeer` binary file at `/home/ubuntu/go-livepeer/livepeer`.
 
-## Run Livepeer
+## Run Livepeer Broadcaster
 
 ```
-/home/ubuntu/go-livepeer/livepeer -broadcaster -network rinkeby -ethUrl https://rinkeby.infura.io/v3/9b7ee8501114410ca67288cc277c65d8
+/home/ubuntu/go-livepeer/livepeer -broadcaster
 ```
 
-Follow the instructions to set up a keystore file, and after it has synced with the network, it will show you `Video Ingest Endpoint rtmp://127.0.0.1:1935`.
+When livepeer broadcaster is ready, it will show you `Video Ingest Endpoint rtmp://127.0.0.1:1935`.
 
-# Next steps
+## Publish a stream into Livepeer Broadcaster
 
-To add a `-mint` flag to the command, and an `-ipfsUrl` for where to add to IPFS:
 ```
-/home/ubuntu/go-livepeer/livepeer -broadcaster -mint -ipfsUrl http://127.0.0.1:5001 -network rinkeby -ethUrl https://rinkeby.infura.io/v3/9b7ee8501114410ca67288cc277c65d8
+sudo apt install -y ffmpeg
+
+ffmpeg -re -f lavfi -i \
+       testsrc=size=500x500:rate=24,format=yuv420p \
+       -f lavfi -i sine -c:v libx264 -b:v 1000k \
+       -x264-params keyint=72 -c:a aac -f flv \
+       rtmp://127.0.0.1:1935/test-stream
 ```
 
-So that if the software is run with the `-mint` flag, then the `livepeer` process:
+## Install Textile
 
-1. Writes the video segment `.ts` files to the `-ipfsUrl`, and generates the CID for the content.
-2. Mints an NFT referencing the IPFS CID.
+```
+cd ~
+wget https://github.com/textileio/textile/releases/download/v2.6.9/hub_v2.6.9_linux-amd64.tar.gz
+tar -xzf hub_v2.6.9_linux-amd64.tar.gz
+rm hub_v2.6.9_linux-amd64.tar.gz
+cd hub_v2.6.9_linux-amd64
+sudo ./install
+hub version
+hub init
+```
+Then you wil be required to create a username, and connect your email address.
+```
+hub buck init
+```
+Failing
