@@ -1,5 +1,7 @@
 ## Livestream-NFT-Minting
 
+To set up a development and test environment, follow this [project deliverable](https://github.com/videoDAC/Livestream-NFT-Minting/blob/main/ubuntu-build-environment.md).
+
 The objective of the project is to enable NFTs to be minted in real-time, from livestream video.
 
 ## Concept
