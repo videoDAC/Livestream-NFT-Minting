@@ -93,7 +93,16 @@ hub version
 hub init
 ```
 Then you wil be required to create a username, and connect your email address.
+
+Once complete, switch into the directory which contains all the video segment files, and initialise textile:
 ```
+cd ~/.lpData/offchain
 hub buck init
 ```
-Failing
+Follow the instructions to initialise a new bucket.
+
+Once done, create a `watch` process, to watch for new files written to this folder:
+```
+hub buck watch
+```
+This will begin monitoring the `~/.lpData/offchain` folder for new files, which it will write to textile.
