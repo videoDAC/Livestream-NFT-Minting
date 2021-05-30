@@ -35,7 +35,7 @@ Should print the version number.
 
 ## Build livepeer
 
-### Clone forked repos
+### Clone `go-livepeer` repo
 
 Download repositories for `go-livepeer`:
 ```
